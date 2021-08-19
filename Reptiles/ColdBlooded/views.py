@@ -63,7 +63,22 @@ def index(request):
     return render(request, "ColdBlooded/index.html")
 
 def trivia(request):
-    return render(request, "ColdBlooded/trivia.html")
+    if request.method == 'POST':
+        trivia = Trivia.objects.all()
+        correct = 0
+        incorrect = 0
+        total = 0
+        for t in trivia:
+            if t.answer == request.POST.get(t.question):
+                correct = correct + 1
+            else:
+                incorrect = incorrect + 1
+            total = total + 1
+        return render(request, 'ColdBlooded/')
+
+    return render(request, "ColdBlooded/trivia.html", {
+        "Trivia": Trivia.objects.all()
+    })
 
 def newtrivia(request):
     return render(request, "ColdBlooded/newtrivia.html")
