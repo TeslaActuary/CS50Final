@@ -1,0 +1,12 @@
+{% extends "ColdBlooded/layout.html" %}
+
+{% block body %}
+
+    <h2>New Entry</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="List">
+    </form>
+
+{% endblock %}
