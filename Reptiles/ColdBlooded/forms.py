@@ -19,3 +19,8 @@ class Questionform(forms.ModelForm):
         # 'choice3',
         # 'choice4',
         # 'answer']
+
+class CreateForm(forms.ModelForm):
+    class Meta:
+        model = Snake
+        fields = ['name', 'sciname', 'description', 'picture', 'is_venomous']

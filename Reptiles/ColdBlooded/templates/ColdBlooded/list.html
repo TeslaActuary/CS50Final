@@ -1,0 +1,12 @@
+{% extends "ColdBlooded/layout.html" %}
+
+{% block body %}
+    <h2>Herpepedia</h2>
+    <ul>
+        {% for snake in snakes %}
+        <div>
+            <a href="{% url 'detail' snake.id %}">{{ snake.name }}</a>
+        </div>
+        {% endfor %}
+    </ul>
+{% endblock %}
