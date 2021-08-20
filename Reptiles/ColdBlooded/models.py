@@ -17,7 +17,7 @@ class Snake(models.Model):
     is_venomous = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name}: {self.sciname}"
+        return self.name
 
 class Trivia(models.Model):
     question = models.ImageField()

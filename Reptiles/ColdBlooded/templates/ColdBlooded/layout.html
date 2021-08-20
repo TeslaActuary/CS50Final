@@ -9,7 +9,7 @@
     </head>
 </html>
 <body>
-    <h1>Snakes</h1>
+    <h1>Snakingdom</h1>
     <div>
         {% if user.is_authenticated %}
             Signed in as <strong>{{ user.username }}</strong>.
@@ -26,13 +26,13 @@
         </li>
         {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{% url 'create' %}">Create New Entry</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'newtrivia' %}">New Trivia Question</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
             </li>
         {% else %}
             <li class="nav-item">
@@ -42,6 +42,13 @@
                 <a class="nav-link" href="{% url 'register' %}">Register</a>
             </li>
         {% endif %}
+        <li>
+            <form class="d-flex" method="GET" action="{% url 'search' %}">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search snakes" aria-label="Search" name="search">
+                <button class="btn btn-outline-secondory" type="submit">Search</button>
+            </form>
+        </li>
     </ul>
     <hr>
     {% block body %}

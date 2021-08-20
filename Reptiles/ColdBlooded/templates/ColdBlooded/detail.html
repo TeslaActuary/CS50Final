@@ -7,6 +7,6 @@
     <img src="{{ snake.picture }}">
 
     <ul>Descritption: {{ snake.description }}</ul>
-
+    <a href="{% url 'edit' snake_name=snake.name %}">Edit</a>
 
 {% endblock %}

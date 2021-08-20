@@ -1,0 +1,22 @@
+{% extends "ColdBlooded/layout.html" %}
+
+{% block body %}
+
+    <h2>Search Results:</h2>
+    {% if search %}
+        {% for result in results %}
+            <a href="{% url 'detail' result.id %}">{{ result }}</a>
+            {% if result.is_venomous %}
+                Dangerous
+            {% else %}
+                Harmless
+            {% endif %}
+            <br/>
+        {% endfor %}
+    {% else %}
+        Hello
+    {% endif %}
+
+
+
+{% endblock %}
