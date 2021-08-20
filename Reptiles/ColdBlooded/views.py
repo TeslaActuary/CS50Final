@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import User, Snake, Trivia
-from .forms import Questionform, CreateForm
+from .forms import Questionform
 
 # Create your views here.
 def login_view(request):
@@ -21,11 +21,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "ColdBlooded//login.html", {
+            return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "ColdBlooded/login.html")
+        return render(request, "auctions/login.html")
 
 
 def logout_view(request):
@@ -42,7 +42,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "ColdBlooded//register.html", {
+            return render(request, "auctions/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -51,46 +51,34 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "ColdBlooded//register.html", {
+            return render(request, "auctions/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "ColdBlooded//register.html")
+        return render(request, "auctions/register.html")
 
 def index(request):
     return render(request, "ColdBlooded/index.html")
 
-def list(request, venomous):
-    snakes= Snake.objects.filter(is_venomous=venomous)
-    return render(request, "ColdBlooded/list.html",{
-        "snakes": snakes
-    })
-
-def detail(request, snake_id):
-    snake = Snake.objects.get(pk=snake_id)
-    return render(request, "ColdBlooded/detail.html", {
-        "snake": snake,
-    })
-
 def trivia(request):
-    return render(request, "ColdBlooded/trivia.html")
+    if request.method == 'POST':
+        trivia = Trivia.objects.all()
+        correct = 0
+        incorrect = 0
+        total = 0
+        for t in trivia:
+            if t.answer == request.POST.get(t.question):
+                correct = correct + 1
+            else:
+                incorrect = incorrect + 1
+            total = total + 1
+        return render(request, 'ColdBlooded/')
+
+    return render(request, "ColdBlooded/trivia.html", {
+        "Trivia": Trivia.objects.all()
+    })
 
 def newtrivia(request):
     return render(request, "ColdBlooded/newtrivia.html")
-
-def create(request):
-    form = CreateForm()
-    context = {
-        'form': form
-    }
-    if request.method == 'POST':
-        form = CreateForm(request.POST)
-        if form.is_valid():
-            form.save()  
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(request, "ColdBlooded/newentry.html", context)
-    else:
-        return render(request, "ColdBlooded/newentry.html", context)
