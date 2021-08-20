@@ -24,3 +24,12 @@ class CreateForm(forms.ModelForm):
     class Meta:
         model = Snake
         fields = ['name', 'sciname', 'description', 'range', 'picture', 'is_venomous']
+
+        #widgets = {
+        #    'name': forms.TextInput(attrs={'class': 'form-control'}),
+        #    'sciname': forms.TextInput(attrs={'class': 'form-control', 'Placeholder': 'Enter the Scicence Name'}),
+        #    'description': forms.Textarea(attrs={'class': 'form-control'}),
+        #    'range': forms.TextInput(attrs={'class': 'form-control'}),
+        #    'picture': forms.FileInput(attrs={'class': 'form-control-file'}),
+        #    'is_venomous': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        #}

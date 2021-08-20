@@ -1,12 +1,16 @@
 {% extends "ColdBlooded/layout.html" %}
 
 {% block body %}
+    <div>
+        <h2>{{ snake.name }}</h2>
+        <ul>{{ snake.sciname }}</ul>
+        <img src="{{ snake.picture }}">
 
-    <h2>{{ snake.name }}</h2>
-    <ul>{{ snake.sciname }}</ul>
-    <img src="{{ snake.picture }}">
-
-    <ul>Descritption: {{ snake.description }}</ul>
-    <a href="{% url 'edit' snake_name=snake.name %}">Edit</a>
+        <ul>Descritption: {{ snake.description }}</ul>
+        <ul>Range: {{ snake.range }}</ul>
+        <img src="{{ snake.rangepic }}">"
+    </div>
+    
+    <a href="{% url 'edit' snake.name %}">Edit</a>
 
 {% endblock %}

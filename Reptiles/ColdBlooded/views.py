@@ -92,7 +92,7 @@ def create(request):
                 snake_name = form.cleaned_data["name"]
                 snake = Snake.objects.get(name=snake_name)  
                 #new = form.save(commit=False)
-                return render(request, "ColdBlooded/newentry.html", {
+                return render(request, "ColdBlooded/entry.html", {
                     'form': form, 
                     'message': "This entry already exists."
                     })
@@ -100,9 +100,9 @@ def create(request):
                 form.save()
                 return HttpResponseRedirect(reverse("detail", args=[snake.id]))
         else:
-            return render(request, "ColdBlooded/newentry.html", context)
+            return render(request, "ColdBlooded/entry.html", context)
     else:
-        return render(request, "ColdBlooded/newentry.html", context)
+        return render(request, "ColdBlooded/entry.html", context)
 
 def edit(request, snake_name):
     content = Snake.objects.get(name=snake_name)
@@ -122,9 +122,9 @@ def edit(request, snake_name):
             form.save()
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "ColdBlooded/newentry.html", context)
+            return render(request, "ColdBlooded/entry.html", context)
     else:
-        return render(request, "ColdBlooded/newentry.html", context)
+        return render(request, "ColdBlooded/entry.html", context)
 
 def search(request):
     if request.method == "GET":

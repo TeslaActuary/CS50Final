@@ -12,11 +12,9 @@
                 Harmless
             {% endif %}
             <br/>
+        {% empty %}
+            The searched item is not in the database.
         {% endfor %}
-    {% else %}
-        Hello
     {% endif %}
-
-
-
+    
 {% endblock %}
