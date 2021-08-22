@@ -1,3 +1,9 @@
 body {
     padding: 10px;
+    background-color: rgba(61, 69, 107, 0.068);
+}
+
+title {
+    font-size: 500px;
+    color:red;
 }
