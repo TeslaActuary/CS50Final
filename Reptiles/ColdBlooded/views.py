@@ -23,11 +23,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "ColdBlooded//login.html", {
+            return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "ColdBlooded/login.html")
+        return render(request, "auctions/login.html")
 
 
 def logout_view(request):
@@ -74,20 +74,23 @@ def register(request):
 def index(request):
     return render(request, "ColdBlooded/index.html")
 
-def list(request, venomous):
-    snakes= Snake.objects.filter(is_venomous=venomous)
-    return render(request, "ColdBlooded/list.html",{
-        "snakes": snakes
-    })
-
-def detail(request, snake_id):
-    snake = Snake.objects.get(pk=snake_id)
-    return render(request, "ColdBlooded/detail.html", {
-        "snake": snake,
-    })
-
 def trivia(request):
-    return render(request, "ColdBlooded/trivia.html")
+    if request.method == 'POST':
+        trivia = Trivia.objects.all()
+        correct = 0
+        incorrect = 0
+        total = 0
+        for t in trivia:
+            if t.answer == request.POST.get(t.question):
+                correct = correct + 1
+            else:
+                incorrect = incorrect + 1
+            total = total + 1
+        return render(request, 'ColdBlooded/')
+
+    return render(request, "ColdBlooded/trivia.html", {
+        "Trivia": Trivia.objects.all()
+    })
 
 def newtrivia(request):
     return render(request, "ColdBlooded/newtrivia.html")
