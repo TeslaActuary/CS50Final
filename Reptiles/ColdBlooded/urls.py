@@ -13,5 +13,5 @@ urlpatterns = [
     path('<int:snake_id>', views.detail, name='detail'),
     path("create", views.create, name="create"),
     path("edit/<str:snake_name>", views.edit, name="edit"),
-    path('search', views.search, name='search')
-]
+    path('search', views.search, name='search'),
+] 
