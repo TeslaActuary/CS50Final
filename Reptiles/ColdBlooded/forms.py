@@ -11,11 +11,12 @@ from .models import *
 class Questionform(forms.ModelForm):
     class Meta:
         model=Trivia
-        fields="__all__"
-        #fields = [
-        # 'question',
-        # 'choice1', 
-        # 'choice2',
-        # 'choice3',
-        # 'choice4',
-        # 'answer']
+        #fields="__all__"
+        fields = [
+            'id',
+            'question',
+            'choice1', 
+            'choice2',
+            'choice3',
+            'choice4',
+            'answer']

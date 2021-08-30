@@ -20,6 +20,7 @@ class Snake(models.Model):
         return f"{self.name}: {self.sciname}"
 
 class Trivia(models.Model):
+    id = models.AutoField(primary_key=True)
     question = models.ImageField()
     choice1 = models.CharField(max_length=200,null=True)
     choice2 = models.CharField(max_length=200,null=True)
@@ -27,5 +28,5 @@ class Trivia(models.Model):
     choice4 = models.CharField(max_length=200,null=True)
     answer = models.CharField(max_length=200,null=True)
     
-    def __str__(self):
+    def __int__(self):
         return self.answer
