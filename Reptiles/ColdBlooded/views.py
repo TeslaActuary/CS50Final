@@ -65,6 +65,17 @@ def register(request):
 def index(request):
     return render(request, "ColdBlooded/index.html")
 
+def list(request, venomous):
+    snakes= Snake.objects.filter(is_venomous=venomous)
+    return render(request, "ColdBlooded/list.html",{
+        "snakes": snakes
+    })
+
+def detail(request, snake_id):
+    snake = Snake.objects.get(pk=snake_id)
+    return render(request, "ColdBlooded/detail.html", {
+        "snake": snake,
+    })
 #initialize trivia outside of trivia request
 trivia = utils.quiz_list(3)
 
