@@ -5,9 +5,11 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.urls.base import is_valid_path
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import User, Snake, Trivia
-from .forms import Questionform
+from .forms import Questionform, CreateForm, createuserform
 from . import utils
 
 # Create your views here.
@@ -136,3 +138,64 @@ def newtrivia(request):
         return render(request, "ColdBlooded/newtrivia.html", {
             'form': form
         })
+
+@login_required(login_url='/accounts/login/')
+def create(request):
+    form = CreateForm()
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        form = CreateForm(request.POST)
+        if form.is_valid():           
+            try:
+                snake_name = form.cleaned_data["name"]
+                snake = Snake.objects.get(name=snake_name)  
+                #new = form.save(commit=False)
+                return render(request, "ColdBlooded/entry.html", {
+                    'form': form, 
+                    'message': "This entry already exists."
+                    })
+            except Snake.DoesNotExist:
+                form.save()
+                return HttpResponseRedirect(reverse("detail", args=[snake.id]))
+        else:
+            return render(request, "ColdBlooded/entry.html", context)
+    else:
+        return render(request, "ColdBlooded/entry.html", context)
+
+@login_required(login_url='/accounts/login/')
+def edit(request, snake_name):
+    content = Snake.objects.get(name=snake_name)
+    form = CreateForm(initial={
+        'name': content.name, 
+        'sciname': content.sciname, 
+        'description': content.description,
+        'picture': content.picture,
+        'is_venomous': content.is_venomous
+        })
+    context = {
+        'form': form
+    }
+    if request.method == "POST":
+        form = CreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "ColdBlooded/entry.html", context)
+    else:
+        return render(request, "ColdBlooded/entry.html", context)
+
+def search(request):
+    if request.method == "GET":
+        search = request.GET.get('search')
+        results = Snake.objects.filter(name__contains=search)
+        print(search)
+        print(results)
+        return render(request, "ColdBlooded/search.html", {
+            'search': search,
+            'results':results
+            })
+    else:
+        return render(request, "ColdBlooded/search.html", {})
