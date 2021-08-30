@@ -4,5 +4,13 @@ body {
 
 #theme {
     background-color: rgba(43, 56, 56, 0.192);
+hr.solid {
+    border-top: 3px solid #bbb;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }
