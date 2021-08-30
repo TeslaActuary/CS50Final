@@ -1,0 +1,22 @@
+{% extends "ColdBlooded/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+    <h2>Entry</h2>
+
+    {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="Save">
+        </form>
+    </div>
+    
+
+{% endblock %}
