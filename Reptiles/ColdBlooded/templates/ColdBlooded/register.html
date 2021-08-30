@@ -1,13 +1,11 @@
 {% extends "ColdBlooded/layout.html" %}
 
 {% block body %}
-<!--
+
     <h2>Register</h2>
 
     {% if message %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
+        <div>{{ message }}</div>
     {% endif %}
 
     <form action="{% url 'register' %}" method="post">
@@ -28,23 +26,5 @@
     </form>
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
--->
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="alert {{ message.tags }}" role="alert"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>        
-{% endif %}
 
-{% load crispy_forms_tags %}
-
-<div class="container" py-5>
-    <h2>Register</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ register_form|crispy }}
-        <input class="btn btn-primary" type="submit" value="Register">
-    </form>
-    <p class="text-center">Already have an account? <a href="{% url 'login' %}">Log In here.</p>
 {% endblock %}

@@ -2,12 +2,13 @@ body {
     padding: 10px;
 }
 
-title {
-    font-size: 500px;
-    color:red;
+hr.solid {
+    border-top: 3px solid #bbb;
 }
 
-#theme {
-    background-color: rgba(43, 56, 56, 0.192);
-}
-
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }

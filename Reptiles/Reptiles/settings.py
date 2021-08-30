@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,10 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,11 +127,4 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
 MEDIA_URL = '/media_cdn/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_cdn/')
-
-LOGIN_URL="/accounts/login/"
-
-MESSAGE_TAGS = {
-    messages.SUCCESS: 'alert-sucess',
-    messages.ERROR: 'alert-danger',
-}
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn').replace('\\', '/')

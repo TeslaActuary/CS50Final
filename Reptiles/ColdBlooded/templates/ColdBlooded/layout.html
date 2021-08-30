@@ -3,67 +3,40 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Snakingdom{% endblock %}</title>
-        <link href="{% static 'ColdBlooded/styles.css' %}" rel="stylesheet">
+        <title>{% block title %}Snakes{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        
+        <link href="{% static 'ColdBlooded/styles.css' %}" rel="stylesheet">
     </head>
 </html>
-<body id="theme">
-    <div class="bg-dark text-secondary p-3">
+<body>
+    <h1>Snakes</h1>
+    <div>
         {% if user.is_authenticated %}
             Signed in as <strong>{{ user.username }}</strong>.
         {% else %}
             Not signed in.
         {% endif %}
     </div>
-    <div>
-        <!--Navigation Bar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3 mb-2">
-            <a class="navbar-brand"  href="{% url 'index' %}">Snakingdom</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'trivia' %}">Trivia</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'create' %}">Create New Entry</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'newtrivia' %}">Create New Trivia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">Register</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <form class="d-flex" method="GET" action="{% url 'search' %}">
-                {% csrf_token %}
-                <input class="form-control mr-sm-2" type="search" placeholder="Search a snake" aria-label="Search" name="search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-    </div>
-    
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'trivia' %}">Trivia</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'newtrivia' %}">New Trivia Question</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+        {% endif %}
+    </ul>
     <hr>
     {% block body %}
     {% endblock %}
