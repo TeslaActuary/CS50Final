@@ -3,9 +3,11 @@ from django.db import IntegrityError
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import User, Snake, Trivia
-from .forms import Questionform, CreateForm
+from .forms import Questionform, CreateForm, createuserform
 
 # Create your views here.
 def login_view(request):
@@ -34,31 +36,41 @@ def logout_view(request):
 
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+    #if request.method == "POST":
+    #    username = request.POST["username"]
+    #    email = request.POST["email"]
 
         # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "ColdBlooded//register.html", {
-                "message": "Passwords must match."
-            })
+    #    password = request.POST["password"]
+    #    confirmation = request.POST["confirmation"]
+    #    if password != confirmation:
+    #        return render(request, "ColdBlooded//register.html", {
+    #            "message": "Passwords must match."
+    #        })
 
         # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "ColdBlooded//register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "ColdBlooded//register.html")
-
+    #    try:
+    #        user = User.objects.create_user(username, email, password)
+    #        user.save()
+    #    except IntegrityError:
+    #        return render(request, "ColdBlooded//register.html", {
+    #            "message": "Username already taken."
+    #        })
+    #    login(request, user)
+    #    return HttpResponseRedirect(reverse("index"))
+    #else:
+    #    return render(request, "ColdBlooded//register.html")
+    if request.method == "POST":
+        form = createuserform(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("index")
+        messages.error(request, "Please check your entry. Invalid information.")
+    form = createuserform()
+    return render(request=request, template_name="ColdBlooded/register.html", context={"register_form":form})
+        
 def index(request):
     return render(request, "ColdBlooded/index.html")
 
@@ -80,6 +92,7 @@ def trivia(request):
 def newtrivia(request):
     return render(request, "ColdBlooded/newtrivia.html")
 
+@login_required(login_url='/accounts/login/')
 def create(request):
     form = CreateForm()
     context = {
@@ -104,6 +117,7 @@ def create(request):
     else:
         return render(request, "ColdBlooded/entry.html", context)
 
+@login_required(login_url='/accounts/login/')
 def edit(request, snake_name):
     content = Snake.objects.get(name=snake_name)
     form = CreateForm(initial={
