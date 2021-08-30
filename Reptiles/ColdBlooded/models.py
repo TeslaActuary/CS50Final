@@ -8,16 +8,16 @@ class User(AbstractUser):
 class Snake(models.Model):
 
     name = models.CharField(max_length=128, default='')
-    sciname = models.CharField(max_length=128, default='')
+    sciname = models.CharField(max_length=128, default='', verbose_name="Science Name")
     description = models.TextField(default ='')
     picture = models.ImageField(blank=True)
     range = models.CharField(max_length=128,null=True)
     rangepic = models.URLField()
     funfacts = models.TextField(null=True, blank=True)
-    is_venomous = models.BooleanField(default=False)
+    is_venomous = models.BooleanField(default=False, verbose_name="Venomous?")
 
     def __str__(self):
-        return f"{self.name}: {self.sciname}"
+        return self.name
 
 class Trivia(models.Model):
     question = models.ImageField()
