@@ -2,10 +2,17 @@
 
 {% block body %}
 
+    <div>
+        <h2>{{ snake.name }}</h2>
+        <ul>Scientific name: {{ snake.sciname }}</ul>
+        <picture>
+            <img src="{{ MEDIA_URL }}{{ snake.picture }}" class="img-fluid" style="width:560px; height:auto;">
+        </picture>
         <ul>Descritption: {{ snake.description }}</ul>
         <ul>Range: {{ snake.range }}</ul>
-        <img src="{{ snake.rangepic }}">"
+        <img src="{{ snake.rangepic }}">
     </div>
     
-    <a href="{% url 'edit' snake.name %}">Edit</a>
+    <a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{% url 'edit' snake.name %}">Edit</a>
+
 {% endblock %}

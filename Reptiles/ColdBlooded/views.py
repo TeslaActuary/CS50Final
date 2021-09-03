@@ -40,29 +40,15 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
-            return render(request, "ColdBlooded/register.html", {
-                "message": "Passwords must match."
-            })
-
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "ColdBlooded/register.html", {
-                "message": "Username already taken."
-            })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "ColdBlooded/register.html")
+        form = createuserform(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("index")
+        messages.error(request, "Please check your entry. Invalid information.")
+    form = createuserform()
+    return render(request=request, template_name="ColdBlooded/register.html", context={"register_form":form})
 
 def index(request):
     return render(request, "ColdBlooded/index.html")
@@ -146,7 +132,7 @@ def create(request):
         'form': form
     }
     if request.method == 'POST':
-        form = CreateForm(request.POST)
+        form = CreateForm(request.POST, request.FILES)
         if form.is_valid():           
             try:
                 snake_name = form.cleaned_data["name"]
@@ -159,8 +145,6 @@ def create(request):
             except Snake.DoesNotExist:
                 form.save()
                 return HttpResponseRedirect(reverse("detail", args=[snake.id]))
-        else:
-            return render(request, "ColdBlooded/entry.html", context)
     else:
         return render(request, "ColdBlooded/entry.html", context)
 
@@ -171,6 +155,7 @@ def edit(request, snake_name):
         'name': content.name, 
         'sciname': content.sciname, 
         'description': content.description,
+        'range': content.range,
         'picture': content.picture,
         'is_venomous': content.is_venomous
         })
@@ -178,10 +163,10 @@ def edit(request, snake_name):
         'form': form
     }
     if request.method == "POST":
-        form = CreateForm(request.POST)
+        form = CreateForm(request.POST, request.FILES, instance=content)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("detail", args=[content.id]))
         else:
             return render(request, "ColdBlooded/entry.html", context)
     else:
