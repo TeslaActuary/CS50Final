@@ -85,7 +85,7 @@ def detail(request, snake_id):
         "snake": snake,
     })
 #initialize trivia outside of trivia request
-trivia = utils.quiz_list(3)
+trivia = utils.quiz_list(5)
 
 def trivia(request):
 
@@ -122,7 +122,7 @@ def trivia(request):
         })
 
     else:
-        trivia = utils.quiz_list(3)
+        trivia = utils.quiz_list(5)
         return render(request, "ColdBlooded/trivia.html", {
             "Trivia": trivia
         })

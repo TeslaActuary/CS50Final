@@ -4,12 +4,12 @@
 
     <div>
         <h2>{{ snake.name }}</h2>
-        <ul>Scientific name: {{ snake.sciname }}</ul>
+        <ul><strong>Scientific Name:</strong> {{ snake.sciname }}</ul>
         <picture>
             <img src="{{ MEDIA_URL }}{{ snake.picture }}" class="img-fluid" style="width:560px; height:auto;">
         </picture>
-        <ul>Descritption: {{ snake.description }}</ul>
-        <ul>Range: {{ snake.range }}</ul>
+        <ul><strong>Description: </strong>{{ snake.description }}</ul>
+        <ul><strong>Range: </strong> {{ snake.range }}</ul>
         <img src="{{ snake.rangepic }}" alt="map: range of habitat">
     </div>
     
