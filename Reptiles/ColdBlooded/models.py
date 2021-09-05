@@ -8,11 +8,11 @@ class User(AbstractUser):
 class Snake(models.Model):
 
     name = models.CharField(max_length=128, default='')
-    sciname = models.CharField(max_length=128, default='')
+    sciname = models.CharField(max_length=128, default='', verbose_name="scientific name")
     description = models.TextField(default ='')
     picture = models.ImageField()
     range = models.CharField(max_length=128,null=True)
-    rangepic = models.URLField(blank=True)
+    rangepic = models.URLField(blank=True, verbose_name="Range Map (URL to range map)")
     funfacts = models.TextField(null=True, blank=True)
     is_venomous = models.BooleanField(default=False)
 

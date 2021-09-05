@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,7 +132,8 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
 MEDIA_URL = '/media_cdn/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn').replace('\\', '/')
 
-LOGIN_URL="/accounts/login/"
+LOGIN_URL="login"
+LOGIN_REDIRECT_URL='login'
 
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-sucess',

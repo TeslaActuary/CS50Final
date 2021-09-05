@@ -10,7 +10,7 @@
         </picture>
         <ul>Descritption: {{ snake.description }}</ul>
         <ul>Range: {{ snake.range }}</ul>
-        <img src="{{ snake.rangepic }}">
+        <img src="{{ snake.rangepic }}" alt="map: range of habitat">
     </div>
     
     <a class="btn btn-secondary btn-lg active" role="button" aria-pressed="true" href="{% url 'edit' snake.name %}">Edit</a>

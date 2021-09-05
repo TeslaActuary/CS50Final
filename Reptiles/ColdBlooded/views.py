@@ -46,7 +46,27 @@ def register(request):
             login(request, user)
             messages.success(request, "Registration successful.")
             return redirect("index")
-        messages.error(request, "Please check your entry. Invalid information.")
+        else:
+            password1 = form.data['password1']
+            password2 = form.data['password2']
+            email = form.data['email']
+            username = form.data['username']
+            for msg in form.errors.as_data():
+                if msg == 'username':
+                    if User.objects.filter(username=username).exists():
+                        messages.error(request, f"Username {username} already exists.")
+                    else:
+                        messages.error(request, f"Invalid username {username}.")
+                if msg == 'email':
+                    if User.objects.filter(email=email).exists():
+                        messages.error(request, f"Email {email} already exists.")
+                    else:
+                        messages.error(request, f"Invalid email {email}.")
+                if msg == 'password2' and password1 == password2:
+                    messages.error(request, f"Selected password is not strong enough")
+                elif msg == 'password2' and password1 != password2:
+                    messages.error(request, f"Password and Confirmation Password do not match")
+            messages.error(request, "Please check your entry. Invalid information.")
     form = createuserform()
     return render(request=request, template_name="ColdBlooded/register.html", context={"register_form":form})
 
@@ -125,7 +145,7 @@ def newtrivia(request):
             'form': form
         })
 
-@login_required(login_url='/accounts/login/')
+@login_required()
 def create(request):
     form = CreateForm()
     context = {
@@ -148,7 +168,7 @@ def create(request):
     else:
         return render(request, "ColdBlooded/entry.html", context)
 
-@login_required(login_url='/accounts/login/')
+@login_required()
 def edit(request, snake_name):
     content = Snake.objects.get(name=snake_name)
     form = CreateForm(initial={
