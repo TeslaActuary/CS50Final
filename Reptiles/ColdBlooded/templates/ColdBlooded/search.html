@@ -1,0 +1,22 @@
+{% extends "ColdBlooded/layout.html" %}
+
+{% block body %}
+
+    <h2>Search Results:</h2>
+    <ul>
+        {% if search %}
+        {% for result in results %}
+            <a href="{% url 'detail' result.id %}">{{ result }}</a>
+            {% if result.is_venomous %}
+                <span class="badge bg-danger"> Venomous</span>
+            {% else %}
+                <span class="badge bg-secondary">Harmless</span>
+            {% endif %}
+            <br/>
+        {% empty %}
+            The searched item is not in the database.
+        {% endfor %}
+    {% endif %}
+    </ul>
+   
+{% endblock %}

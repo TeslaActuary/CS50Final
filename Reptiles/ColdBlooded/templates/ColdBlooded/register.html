@@ -2,29 +2,22 @@
 
 {% block body %}
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="alert {{ message.tags }}" role="alert"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>        
+{% endif %}
+
+{% load crispy_forms_tags %}
+
+<div class="container" py-5>
     <h2>Register</h2>
-
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
-
-    <form action="{% url 'register' %}" method="post">
+    <form method="POST">
         {% csrf_token %}
-        <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
-        </div>
+        {{ register_form|crispy }}
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
-
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
-
+    <p class="text-center">Already have an account? <a href="{% url 'login' %}">Log In here.</p>
 {% endblock %}

@@ -10,14 +10,14 @@ class Snake(models.Model):
     name = models.CharField(max_length=128, default='')
     sciname = models.CharField(max_length=128, default='')
     description = models.TextField(default ='')
-    picture = models.ImageField(blank=True)
+    picture = models.ImageField()
     range = models.CharField(max_length=128,null=True)
-    rangepic = models.URLField()
+    rangepic = models.URLField(blank=True)
     funfacts = models.TextField(null=True, blank=True)
     is_venomous = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name}: {self.sciname}"
+        return f"{self.name} - {self.sciname}"
 
 class Trivia(models.Model):
     id = models.AutoField(primary_key=True)
